@@ -1,11 +1,11 @@
 # Sales & Demand Forecasting System
 
-> A **production-grade machine learning pipeline** for retail sales forecasting with Flask API deployment, automated retraining, and real-time monitoring.
+> A **production-grade machine learning pipeline** for retail sales forecasting with automated retraining and real-time monitoring.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org/)
-[![Flask API](https://img.shields.io/badge/Flask-API-green.svg)](https://flask.palletsprojects.com/)
+
 
 
 
@@ -16,7 +16,6 @@ This project implements a **complete end-to-end machine learning lifecycle** for
 - **Predict future sales** with 12-month horizon
 - **Enable better planning** (inventory, cash flow, staffing)
 - **Optimize operations** (reduce stockouts, improve efficiency)
-- **Deploy to production** with Flask REST API
 - **Automate retraining** with monthly pipeline
 - **Monitor accuracy** with real-time dashboard
 
@@ -39,13 +38,8 @@ This project implements a **complete end-to-end machine learning lifecycle** for
 - **Time Series** - Stationarity testing, decomposition, ACF/PACF analysis
 - **Feature Engineering** - Lag features, rolling statistics, EMA, seasonal encoding
 
-### 3. Production Ready
-- **Flask REST API** - 2 endpoints (`/health`, `/predict`)
-- **Model Persistence** - Save/load trained models with joblib
-- **Error Handling** - Comprehensive exception management
-- **Logging** - Production-grade logging & monitoring
 
-### 4. Automation
+### 3. Automation
 - **Monthly Retraining** - Automatic model updates with new data
 - **Performance Validation** - Only save improved models
 - **Monitoring Dashboard** - 4-chart real-time accuracy tracking
@@ -89,7 +83,6 @@ sales-forecasting/
 │   └── Sales_Forecasting_Complete.ipynb          # Full ML pipeline (13 steps)
 │
 ├── src/
-│   ├── forecast_api.py                           # Flask REST API
 │   ├── retraining_pipeline.py                    # Automated monthly retraining
 │   ├── monitoring_dashboard.py                   # Real-time accuracy monitoring
 │   └── utils.py                                  # Helper functions
@@ -177,9 +170,8 @@ This runs all 13 steps:
 8. Model comparison
 9. 12-month forecast
 10. Model persistence
-11. Flask API
-12. Retraining pipeline
-13. Monitoring dashboard
+11. Retraining pipeline
+12. Monitoring dashboard
 
 ### Option 2: Generate Forecast (Python)
 
@@ -206,38 +198,7 @@ forecast = model.predict(next_month_features)
 print(f"Forecasted Sales: ${forecast[0]:,.2f}")
 ```
 
-### Option 3: Use Flask API
-
-```bash
-# Start the API server
-python src/forecast_api.py
-```
-
-Then in another terminal:
-
-```bash
-# Health check
-curl http://127.0.0.1:5000/health
-
-# Get 12-month forecast
-curl -X POST http://127.0.0.1:5000/predict \
-  -H "Content-Type: application/json" \
-  -d '{"months": 12}'
-```
-
-#### API Response Example
-```json
-{
-  "status": "success",
-  "months_forecast": 12,
-  "forecast": [47900.33, 49002.41, 50580.46, ...],
-  "dates": ["2024-01-01", "2024-02-01", ...],
-  "average": 54199.80,
-  "total": 650397.64
-}
-```
-
-### Option 4: Monitor Performance
+### Option 3: Monitor Performance
 
 ```python
 from src.monitoring_dashboard import ForecastMonitoring
@@ -252,7 +213,7 @@ monitor.log_forecast_accuracy('2024-07-01', 50000, 51200)
 monitor.generate_monitoring_report()
 ```
 
-### Option 5: Retrain Model Monthly
+### Option 4: Retrain Model Monthly
 
 ```python
 from src.retraining_pipeline import AutomaticRetrainingPipeline
@@ -427,7 +388,6 @@ Tracks 4 key metrics:
 4. **Summary Statistics** - Overall performance snapshot
 
 
-
 ## Technologies Used
 
 ### Data Processing
@@ -438,10 +398,6 @@ Tracks 4 key metrics:
 - **scikit-learn** (1.3.0) - Gradient Boosting, Random Forest
 - **statsmodels** (0.14.0) - SARIMA, time series analysis
 
-### API & Deployment
-- **Flask** (2.3.3) - REST API framework
-- **Joblib** (1.3.1) - Model serialization
-
 ### Visualization
 - **Matplotlib** (3.7.2) - Static plots
 - **Seaborn** (0.12.2) - Statistical visualizations
@@ -449,7 +405,6 @@ Tracks 4 key metrics:
 ### Development
 - **Jupyter** - Notebook environment
 - **Python** (3.8+) - Programming language
-
 
 
 ## Requirements
@@ -463,7 +418,6 @@ scikit-learn==1.3.0
 matplotlib==3.7.2
 seaborn==0.12.2
 statsmodels==0.14.0
-flask==2.3.3
 joblib==1.3.1
 requests==2.31.0
 ```
@@ -480,9 +434,6 @@ pip install -r requirements.txt
 Create a `.env` file for configuration (template in `.env.example`):
 
 ```bash
-# API Configuration
-FLASK_PORT=5000
-FLASK_DEBUG=False
 
 # Model Configuration
 MODEL_PATH=./models/best_sales_forecast_model.pkl
@@ -556,12 +507,6 @@ ls -la models/
 # Should show: best_sales_forecast_model.pkl, model_features.pkl, model_statistics.pkl
 ```
 
-### Issue: Flask port already in use
-```python
-# Solution: Use different port in src/forecast_api.py
-app.run(port=5001)  # Change from 5000 to 5001
-```
-
 ### Issue: Low forecast accuracy
 ```python
 # Solution: Retrain with new data
@@ -604,11 +549,6 @@ Contributions are welcome! Here's how:
 - Scikit-learn: [User Guide](https://scikit-learn.org/stable/user_guide.html)
 - Feature Engineering: [Kaggle Guide](https://www.kaggle.com/learn/feature-engineering)
 
-### Deployment
-- Flask Documentation: [flask.palletsprojects.com](https://flask.palletsprojects.com/)
-- REST API Best Practices: [Microsoft Guide](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)
-
-
 
 ## Contact & Support
 
@@ -639,7 +579,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - **Future Interns** - For the machine learning internship opportunity.
 - **scikit-learn** - For the excellent ML library
 - **Statsmodels** - For time series tools
-- **Flask** - For the lightweight web framework
+- **Streamlit** - For the dashboard web framework
 - **Community** - For feedback and contributions
 
 
